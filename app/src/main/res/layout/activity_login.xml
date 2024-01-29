@@ -4,9 +4,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gokubg"
+    android:clipToPadding="false"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="24dp">
+
+    <include
+        android:id="@+id/loading"
+        layout="@layout/activity_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="-24dp"
+        android:layout_marginTop="-24dp"
+        android:layout_marginEnd="-24dp"
+        android:layout_marginBottom="-24dp"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/title"
