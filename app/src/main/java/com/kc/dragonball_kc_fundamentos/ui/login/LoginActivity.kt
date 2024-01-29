@@ -16,13 +16,30 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setLayouts()
         setObservers()
         setListeners()
     }
 
+    /* Some previous configurations to the layouts */
+    private fun setLayouts() {
+        // Set background image to crop top
+        binding.landscapeImage?.let { view ->
+            val matrix = view.imageMatrix
+            val viewWidth = view.drawable.intrinsicWidth.toFloat()
+            val screenWidth = resources.displayMetrics.widthPixels.toFloat()
+            val scale = screenWidth / viewWidth
+            matrix.postScale(scale, scale)
+            view.imageMatrix = matrix
+        }
+    }
+
     private fun setListeners() {
         // TODO("Not yet implemented")
-        //binding.LoginButton.setOnClickListener { viewModel.LoginClicked() }
+        binding.loginButton?.setOnClickListener {
+            // TODO
+            /* viewModel.LoginClicked() */
+        }
     }
 
     private fun setObservers() {
