@@ -1,4 +1,9 @@
 package com.kc.dragonball_kc_fundamentos.model
 
-class HeroDto {
-}
+data class HeroDto (
+    val name: String,
+    val photo: String,
+    val description: String,
+    val favorite: Boolean,
+    val id: String,
+)
