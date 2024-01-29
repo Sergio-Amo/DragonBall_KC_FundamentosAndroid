@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">DragonBall_KC_Fundamentos</string>
+    <string name="app_name">DragonBall</string>
+    <string name="user_field_text">Username…</string>
+    <string name="password_field_text">Password…</string>
+    <string name="remember_user">Remember me</string>
+    <string name="login_button">Login</string>
 </resources>
