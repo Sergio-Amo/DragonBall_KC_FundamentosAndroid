@@ -2,6 +2,7 @@ package com.kc.dragonball_kc_fundamentos.ui.login
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
@@ -38,10 +39,10 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setListeners() {
-        // TODO("Not yet implemented")
         binding.loginButton?.setOnClickListener {
-            // TODO
-            /* viewModel.LoginClicked() */
+            val email = binding.editTextTextEmailAddress.text.toString()
+            val password = binding.editTextTextPassword.text.toString()
+            viewModel.loginClicked(email, password)
         }
         //Text change listeners
         binding.editTextTextEmailAddress.doAfterTextChanged { viewModel.validateEmail(it.toString()) }
@@ -80,6 +81,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun successLogin() {
         // Might end unused...
+        Toast.makeText(this@LoginActivity,"Login Success", Toast.LENGTH_SHORT).show()
         // TODO("Not yet implemented")
     }
 }
