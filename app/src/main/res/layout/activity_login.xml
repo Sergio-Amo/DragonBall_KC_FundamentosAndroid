@@ -22,6 +22,7 @@
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/transparentBlack"
         app:cardCornerRadius="22dp"
+        app:cardElevation="0dp"
         app:contentPadding="16dp">
 
         <LinearLayout
@@ -58,13 +59,13 @@
     </androidx.cardview.widget.CardView>
 
     <CheckBox
+        android:id="@+id/rememberCheckBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:buttonTint="@color/white"
         android:text="@string/remember_user"
-        android:textColor="@color/white"
-        app:useMaterialThemeColors="false" />
+        android:textColor="@color/white" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/loginButton"
