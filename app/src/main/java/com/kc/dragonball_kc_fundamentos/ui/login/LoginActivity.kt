@@ -3,11 +3,11 @@ package com.kc.dragonball_kc_fundamentos.ui.login
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
 import com.kc.dragonball_kc_fundamentos.databinding.ActivityLoginBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.lang.Error
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -16,13 +16,13 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setLayouts()
+        setInitialState()
         setObservers()
         setListeners()
     }
 
     /* Some previous configurations to the layouts */
-    private fun setLayouts() {
+    private fun setInitialState() {
         // Set background image to crop top
         binding.landscapeImage?.let { view ->
             val matrix = view.imageMatrix
@@ -32,6 +32,9 @@ class LoginActivity : AppCompatActivity() {
             matrix.postScale(scale, scale)
             view.imageMatrix = matrix
         }
+        // Set button state
+        viewModel.validateEmail(binding.editTextTextEmailAddress.text.toString())
+        viewModel.validatePassword(binding.editTextTextPassword.text.toString())
     }
 
     private fun setListeners() {
@@ -40,6 +43,9 @@ class LoginActivity : AppCompatActivity() {
             // TODO
             /* viewModel.LoginClicked() */
         }
+        //Text change listeners
+        binding.editTextTextEmailAddress.doAfterTextChanged { viewModel.validateEmail(it.toString()) }
+        binding.editTextTextPassword.doAfterTextChanged { viewModel.validatePassword(it.toString()) }
     }
 
     private fun setObservers() {
@@ -47,6 +53,7 @@ class LoginActivity : AppCompatActivity() {
             viewModel.uiState.collect { state ->
                 when (state) {
                     is LoginViewModel.LoginState.Idle -> idle()
+                    is LoginViewModel.LoginState.LoginEnable -> enableLogin(state.enabled)
                     is LoginViewModel.LoginState.Error -> showError(state.errorMessage)
                     is LoginViewModel.LoginState.Loading -> showLoading(true)
                     is LoginViewModel.LoginState.SuccessLogin -> successLogin()
@@ -57,6 +64,10 @@ class LoginActivity : AppCompatActivity() {
 
     private fun idle() {
         // TODO("Not yet implemented")
+    }
+
+    private fun enableLogin(enable: Boolean) {
+        binding.loginButton.isEnabled = enable
     }
 
     private fun showError(error: String) {
