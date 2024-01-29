@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
 import com.kc.dragonball_kc_fundamentos.databinding.ActivityLoginBinding
@@ -64,7 +65,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun idle() {
-        // TODO("Not yet implemented")
+        showLoading(false)
     }
 
     private fun enableLogin(enable: Boolean) {
@@ -72,16 +73,16 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun showError(error: String) {
-        // TODO("Not yet implemented")
+        showLoading(false)
+        Toast.makeText(this@LoginActivity,"Error: $error", Toast.LENGTH_LONG).show()
     }
 
     private fun showLoading(show: Boolean) {
-        // TODO("Not yet implemented")
+        binding.loadingSpinner.root.isVisible = show
     }
 
     private fun successLogin() {
-        // Might end unused...
+        showLoading(false)
         Toast.makeText(this@LoginActivity,"Login Success", Toast.LENGTH_SHORT).show()
-        // TODO("Not yet implemented")
     }
 }

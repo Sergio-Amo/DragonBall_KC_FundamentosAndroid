@@ -10,7 +10,7 @@
     android:padding="24dp">
 
     <include
-        android:id="@+id/loading"
+        android:id="@+id/loading_spinner"
         layout="@layout/activity_loading"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
