@@ -4,10 +4,15 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.kc.dragonball_kc_fundamentos.databinding.ActivityHomeBinding
 import com.kc.dragonball_kc_fundamentos.utils.INFO_HOME_ACTIVITY
 
-class HomeActivity: AppCompatActivity() {
+interface HomeInterface {
+    fun showLoading(show: Boolean)
+}
+
+class HomeActivity : AppCompatActivity(), HomeInterface {
 
     companion object {
         fun launchActivity(context: Context, str: String) {
@@ -17,6 +22,7 @@ class HomeActivity: AppCompatActivity() {
         }
     }
 
+    private lateinit var token: String
     private lateinit var binding: ActivityHomeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +30,11 @@ class HomeActivity: AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val token = intent.getStringExtra(INFO_HOME_ACTIVITY) ?: ""
-        binding.textView?.text = token
+        token = intent.getStringExtra(INFO_HOME_ACTIVITY) ?: ""
+        binding.fragmentContainer
+    }
+
+    override fun showLoading(show: Boolean) {
+        binding.loadingSpinner.isVisible = show
     }
 }
