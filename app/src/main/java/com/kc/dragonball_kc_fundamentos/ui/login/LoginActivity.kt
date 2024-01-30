@@ -73,7 +73,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    fun saveEmail(emailValue: String) {
+    private fun saveEmail(emailValue: String) {
         getPreferences(Context.MODE_PRIVATE).edit().apply {
             putString(LOGIN_EMAIL_VALUE, emailValue)
             apply()
