@@ -3,47 +3,71 @@ package com.kc.dragonball_kc_fundamentos.ui.home.list
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import com.kc.dragonball_kc_fundamentos.R
 
-import com.kc.dragonball_kc_fundamentos.placeholder.PlaceholderContent.PlaceholderItem
 import com.kc.dragonball_kc_fundamentos.databinding.FragmentHeroesItemBinding
+import com.kc.dragonball_kc_fundamentos.model.Hero
 
-/**
- * [RecyclerView.Adapter] that can display a [PlaceholderItem].
- * TODO: Replace the implementation with code for your data type.
- */
-class HeroesRecyclerViewAdapter(
-    private val values: List<PlaceholderItem>,
-) : RecyclerView.Adapter<HeroesRecyclerViewAdapter.ViewHolder>() {
+class HeroesRecyclerViewAdapter() :
+    RecyclerView.Adapter<HeroesRecyclerViewAdapter.HeroViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    private var heroList: List<Hero> = emptyList()
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HeroViewHolder {
 
-        return ViewHolder(
+        return HeroViewHolder(
             FragmentHeroesItemBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
+                LayoutInflater.from(parent.context), parent, false
             )
         )
-
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = values[position]
-        holder.idView.text = item.id
-        holder.contentView.text = item.content
+    override fun onBindViewHolder(holder: HeroViewHolder, position: Int) {
+        holder.showHero(heroList[position])
+        holder.showPosition(position)
+        holder.addListener(heroList[position])
     }
 
-    override fun getItemCount(): Int = values.size
+    override fun getItemCount(): Int = heroList.size
 
-    inner class ViewHolder(binding: FragmentHeroesItemBinding) :
+    inner class HeroViewHolder(binding: FragmentHeroesItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        val idView: TextView = binding.itemNumber
-        val contentView: TextView = binding.content
+        private val idView: TextView = binding.itemNumber
+        private val contentView: TextView = binding.content
+        private val root: LinearLayout = binding.root
+
+        fun showPosition(pos: Int) {
+            idView.text = pos.toString()
+            if (pos % 2 == 0) root.setBackgroundColor(
+                ContextCompat.getColor(root.context, R.color.orangeDragonBall)
+            )
+            else root.setBackgroundColor(
+                ContextCompat.getColor(root.context, R.color.white)
+            )
+        }
+
+        fun showHero(hero: Hero) {
+            contentView.text = hero.name
+
+        }
+
+        fun addListener(hero: Hero) {
+            root.setOnClickListener {
+                // TODO: Clicked!
+            }
+        }
 
         override fun toString(): String {
             return super.toString() + " '" + contentView.text + "'"
         }
     }
 
+    fun updateList(heroList: List<Hero>) {
+        this@HeroesRecyclerViewAdapter.heroList = heroList
+        // Needed if data has changed
+        notifyDataSetChanged()
+    }
 }
+

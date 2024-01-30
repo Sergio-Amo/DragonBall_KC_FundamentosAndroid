@@ -8,55 +8,60 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import com.kc.dragonball_kc_fundamentos.R
+import com.kc.dragonball_kc_fundamentos.databinding.FragmentHeroesListBinding
+import com.kc.dragonball_kc_fundamentos.model.Hero
 import com.kc.dragonball_kc_fundamentos.placeholder.PlaceholderContent
+import com.kc.dragonball_kc_fundamentos.ui.home.HomeInterface
+import com.kc.dragonball_kc_fundamentos.ui.home.SharedViewModel
 
 /**
  * A fragment representing a list of Items.
  */
-class HeroesFragment : Fragment() {
+class HeroesFragment(private val token: String, val homeInterface: HomeInterface) : Fragment() {
 
-    private var columnCount = 1
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        arguments?.let {
-            columnCount = it.getInt(ARG_COLUMN_COUNT)
-        }
-    }
+    private lateinit var binding: FragmentHeroesListBinding
+    private val viewSharedViewModel: SharedViewModel by activityViewModels()
+    private val heroAdapter = HeroesRecyclerViewAdapter()
+    val list = listOf(
+        Hero("foo","1", "img"),
+        Hero("Bar","2", "img"),
+        Hero("Baz","3", "img"),
+        )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_heroes_list, container, false)
-
-        // Set the adapter
-        if (view is RecyclerView) {
-            with(view) {
-                layoutManager = when {
-                    columnCount <= 1 -> LinearLayoutManager(context)
-                    else -> GridLayoutManager(context, columnCount)
-                }
-                adapter = HeroesRecyclerViewAdapter(PlaceholderContent.ITEMS)
-            }
-        }
-        return view
+        binding = FragmentHeroesListBinding.inflate(inflater)
+        return binding.root
     }
 
-    companion object {
-
-        // TODO: Customize parameter argument names
-        const val ARG_COLUMN_COUNT = "column-count"
-
-        // TODO: Customize parameter initialization
-        @JvmStatic
-        fun newInstance(columnCount: Int) =
-            HeroesFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(ARG_COLUMN_COUNT, columnCount)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        configureRecyclerView()
+        populateList()
+        setObservers()
+        setListeners()
     }
+
+    private fun configureRecyclerView() {
+        //binding.recyclerviewHeroes.layoutManager = GridLayoutManager(this, 2)
+        binding.list.layoutManager = LinearLayoutManager(requireContext())
+        binding.list.adapter = heroAdapter
+    }
+
+    private fun populateList() {
+        heroAdapter.updateList(list.shuffled())
+    }
+
+    private fun setObservers() {
+        // TODO
+    }
+
+    private fun setListeners() {
+        // TODO
+    }
+
 }
