@@ -19,20 +19,20 @@ class LoginViewModel : ViewModel() {
 
     private var isValidEmail = false
     private var isValidPassword = false
-    private var token: String = ""
 
     sealed class LoginState {
         class Idle : LoginState()
         class LoginEnable(val enabled: Boolean) : LoginState()
         class Error(val errorMessage: String) : LoginState()
         class Loading : LoginState()
-        class SuccessLogin : LoginState()
+        class SuccessLogin(val token: String) : LoginState()
     }
 
     fun validateEmail(str: String) {
         // Validates email in (valid chars) (@) (char/s) (dot) (chars)
-        val emailRegex = "^[A-Za-z0-9+_.-]+@(.+)\\..+\$".toRegex()
-        isValidEmail = emailRegex.matches(str)
+        "^[A-Za-z0-9+_.-]+@(.+)\\..+\$".toRegex().also {
+            isValidEmail = it.matches(str)
+        }
         setLoginButtonState()
     }
 
@@ -69,8 +69,7 @@ class LoginViewModel : ViewModel() {
             val response = call.execute()
             _uiState.value = if (response.isSuccessful)
                 response.body?.let {
-                    token = it.string()
-                    LoginState.SuccessLogin()
+                    LoginState.SuccessLogin(it.string())
                 } ?: LoginState.Error("Empty Token")
             else
                 LoginState.Error(response.message)

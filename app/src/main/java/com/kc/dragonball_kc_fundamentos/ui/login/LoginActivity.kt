@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
 import com.kc.dragonball_kc_fundamentos.databinding.ActivityLoginBinding
+import com.kc.dragonball_kc_fundamentos.ui.home.HomeActivity
 import com.kc.dragonball_kc_fundamentos.utils.LOGIN_CHECKBOX_CHECKED
 import com.kc.dragonball_kc_fundamentos.utils.LOGIN_EMAIL_VALUE
 import kotlinx.coroutines.Dispatchers
@@ -54,7 +55,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun setListeners() {
         // Login button click
-        binding.loginButton?.setOnClickListener {
+        binding.loginButton.setOnClickListener {
             val email = binding.editTextTextEmailAddress.text.toString()
             val password = binding.editTextTextPassword.text.toString()
             viewModel.loginClicked(email, password)
@@ -87,7 +88,7 @@ class LoginActivity : AppCompatActivity() {
                     is LoginViewModel.LoginState.LoginEnable -> enableLogin(state.enabled)
                     is LoginViewModel.LoginState.Error -> showError(state.errorMessage)
                     is LoginViewModel.LoginState.Loading -> showLoading(true)
-                    is LoginViewModel.LoginState.SuccessLogin -> successLogin()
+                    is LoginViewModel.LoginState.SuccessLogin -> successLogin(state.token)
                 }
             }
         }
@@ -110,11 +111,15 @@ class LoginActivity : AppCompatActivity() {
         binding.loadingSpinner.root.isVisible = show
     }
 
-    private fun successLogin() {
+    private fun successLogin(token: String) {
         // Save mail if remember checked
         if (binding.rememberCheckBox.isChecked) saveEmail(binding.editTextTextEmailAddress.text.toString())
-
         showLoading(false)
-        Toast.makeText(this@LoginActivity, "Login Success", Toast.LENGTH_SHORT).show()
+        navigateToHome(token)
+        //Toast.makeText(this@LoginActivity, "Login Success", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun navigateToHome(token: String) {
+        HomeActivity.launchActivity(this@LoginActivity, token)
     }
 }
