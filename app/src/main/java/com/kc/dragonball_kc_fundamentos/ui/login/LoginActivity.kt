@@ -42,6 +42,8 @@ class LoginActivity : AppCompatActivity() {
             getPreferences(Context.MODE_PRIVATE).getBoolean(LOGIN_CHECKBOX_CHECKED, false)
         binding.rememberCheckBox.isChecked = rememberCbChecked
         // Set email value
+        /** I decided against saving passwords or tokens cause the
+         * exercise asked to use shared preferences that are not secure enough for it **/
         if (rememberCbChecked) binding.editTextTextEmailAddress.setText(
             getPreferences(Context.MODE_PRIVATE).getString(LOGIN_EMAIL_VALUE, "")
         )
