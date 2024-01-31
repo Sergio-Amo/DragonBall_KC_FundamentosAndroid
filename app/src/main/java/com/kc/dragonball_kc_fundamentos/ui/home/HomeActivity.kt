@@ -16,9 +16,9 @@ interface HomeInterface {
 class HomeActivity : AppCompatActivity(), HomeInterface {
 
     companion object {
-        fun launchActivity(context: Context, str: String) {
+        fun launchActivity(context: Context, token: String) {
             val intent = Intent(context, HomeActivity::class.java)
-            intent.putExtra(INFO_HOME_ACTIVITY, str)
+            intent.putExtra(INFO_HOME_ACTIVITY, token)
             context.startActivity(intent)
         }
     }
@@ -35,8 +35,7 @@ class HomeActivity : AppCompatActivity(), HomeInterface {
     }
 
     private fun showHeroList(token: String) {
-        supportFragmentManager
-            .beginTransaction()
+        supportFragmentManager.beginTransaction()
             .replace(binding.fragmentContainer.id, HeroesFragment(token, this))
             //.addToBackStack(null) // Put fragment into back stack
             .commit()
