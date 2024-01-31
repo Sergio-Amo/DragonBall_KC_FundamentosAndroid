@@ -38,6 +38,12 @@ class HeroDetailsFragment(private val hero: Hero, private val homeInterface: Hom
         setListeners()
     }
 
+    // Reset detailsState to idle after destroying fragment to prevent triggering HeroIsDead
+    override fun onDestroyView() {
+        super.onDestroyView()
+        sharedViewModel.resetDetailsState()
+    }
+
     private fun setListeners() {
         binding.hitButton.setOnClickListener {
             sharedViewModel.hitHero(hero)

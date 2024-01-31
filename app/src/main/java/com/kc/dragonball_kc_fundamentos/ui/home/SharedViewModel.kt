@@ -101,4 +101,8 @@ class SharedViewModel : ViewModel() {
             _listState.value = ListState.HeroUpdated(hero)
         }
     }
+
+    fun resetDetailsState() {
+        _detailsState.value = DetailsState.Idle()
+    }
 }
