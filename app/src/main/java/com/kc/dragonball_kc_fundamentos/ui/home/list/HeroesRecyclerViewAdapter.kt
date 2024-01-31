@@ -1,10 +1,18 @@
 package com.kc.dragonball_kc_fundamentos.ui.home.list
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.kc.dragonball_kc_fundamentos.R
 import com.kc.dragonball_kc_fundamentos.databinding.FragmentHeroesItemBinding
 import com.kc.dragonball_kc_fundamentos.model.Hero
 
@@ -31,22 +39,29 @@ class HeroesRecyclerViewAdapter() :
 
     inner class HeroViewHolder(binding: FragmentHeroesItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        private val idView: TextView = binding.itemNumber
-        private val contentView: TextView = binding.content
-        private val root: LinearLayout = binding.root
-
-        /*fun showPosition(pos: Int) {
-            idView.text = pos.toString()
-            if (pos % 2 == 0) root.setBackgroundColor(
-                ContextCompat.getColor(root.context, R.color.orangeDragonBall)
-            )
-            else root.setBackgroundColor(
-                ContextCompat.getColor(root.context, R.color.white)
-            )
-        }*/
+        private val heroNameView: TextView = binding.heroName
+        private val heroImage: ImageView = binding.heroImage
+        private val healthBar: ProgressBar = binding.healthBar
+        private val root: CardView = binding.root
 
         fun showHero(hero: Hero) {
-            contentView.text = hero.name
+            //name
+            heroNameView.text = hero.name
+            //health
+            healthBar.progress = hero.health
+            healthBar.max = hero.maxHealth
+            healthBar.progressTintList = when {
+                hero.health < 26 -> ColorStateList.valueOf(Color.RED)
+                hero.health < 51 -> ColorStateList.valueOf(Color.YELLOW)
+                else -> ColorStateList.valueOf(Color.GREEN)
+            }
+            // Image
+            Glide
+                .with(root)
+                .load(hero.photo)
+                .centerCrop()
+                .placeholder(R.drawable.ic_launcher_foreground)
+                .into(heroImage)
         }
 
         fun addListener(hero: Hero) {
@@ -56,7 +71,7 @@ class HeroesRecyclerViewAdapter() :
         }
 
         override fun toString(): String {
-            return super.toString() + " '" + contentView.text + "'"
+            return super.toString() + " '" + heroNameView.text + "'"
         }
     }
 
