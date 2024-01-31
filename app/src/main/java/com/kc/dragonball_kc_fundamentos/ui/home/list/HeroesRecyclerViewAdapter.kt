@@ -26,7 +26,7 @@ class HeroesRecyclerViewAdapter() :
 
     override fun onBindViewHolder(holder: HeroViewHolder, position: Int) {
         holder.showHero(heroes[position])
-        holder.showPosition(position)
+        //holder.showPosition(position)
         holder.addListener(heroes[position])
     }
 
@@ -38,7 +38,7 @@ class HeroesRecyclerViewAdapter() :
         private val contentView: TextView = binding.content
         private val root: LinearLayout = binding.root
 
-        fun showPosition(pos: Int) {
+        /*fun showPosition(pos: Int) {
             idView.text = pos.toString()
             if (pos % 2 == 0) root.setBackgroundColor(
                 ContextCompat.getColor(root.context, R.color.orangeDragonBall)
@@ -46,11 +46,10 @@ class HeroesRecyclerViewAdapter() :
             else root.setBackgroundColor(
                 ContextCompat.getColor(root.context, R.color.white)
             )
-        }
+        }*/
 
         fun showHero(hero: Hero) {
             contentView.text = hero.name
-
         }
 
         fun addListener(hero: Hero) {
