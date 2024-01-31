@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import com.kc.dragonball_kc_fundamentos.model.Hero
 import com.kc.dragonball_kc_fundamentos.model.HeroDto
-import com.kc.dragonball_kc_fundamentos.ui.login.LoginViewModel
 import com.kc.dragonball_kc_fundamentos.utils.BASE_URL
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

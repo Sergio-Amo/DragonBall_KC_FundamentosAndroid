@@ -1,13 +1,10 @@
 package com.kc.dragonball_kc_fundamentos.ui.home.list
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
-import com.kc.dragonball_kc_fundamentos.R
-
+import androidx.recyclerview.widget.RecyclerView
 import com.kc.dragonball_kc_fundamentos.databinding.FragmentHeroesItemBinding
 import com.kc.dragonball_kc_fundamentos.model.Hero
 

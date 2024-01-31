@@ -1,25 +1,18 @@
 package com.kc.dragonball_kc_fundamentos.ui.home.list
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import android.widget.Toast.makeText
-import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import com.kc.dragonball_kc_fundamentos.R
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.kc.dragonball_kc_fundamentos.databinding.FragmentHeroesListBinding
 import com.kc.dragonball_kc_fundamentos.model.Hero
-import com.kc.dragonball_kc_fundamentos.placeholder.PlaceholderContent
 import com.kc.dragonball_kc_fundamentos.ui.home.HomeInterface
 import com.kc.dragonball_kc_fundamentos.ui.home.SharedViewModel
-import com.kc.dragonball_kc_fundamentos.ui.login.LoginViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
