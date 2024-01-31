@@ -58,7 +58,8 @@ class SharedViewModel : ViewModel() {
                         // Create Hero from HeroDto (health and maxHealth will be set to its default)
                         Hero(hero.name, hero.id, hero.photo)
                     }
-                    ListState.HeroesLoaded(heroArray.toList())
+                    heroes.addAll(heroArray.toList())
+                    ListState.HeroesLoaded(heroes)
                 } ?: ListState.Error("Empty Token")
             else
                 ListState.Error(response.message)
