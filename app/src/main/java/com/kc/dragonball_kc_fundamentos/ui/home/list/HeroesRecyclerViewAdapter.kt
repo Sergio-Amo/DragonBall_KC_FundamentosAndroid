@@ -14,7 +14,7 @@ import com.kc.dragonball_kc_fundamentos.model.Hero
 class HeroesRecyclerViewAdapter() :
     RecyclerView.Adapter<HeroesRecyclerViewAdapter.HeroViewHolder>() {
 
-    private var heroList: List<Hero> = emptyList()
+    private var heroes: List<Hero> = emptyList()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HeroViewHolder {
 
         return HeroViewHolder(
@@ -25,12 +25,12 @@ class HeroesRecyclerViewAdapter() :
     }
 
     override fun onBindViewHolder(holder: HeroViewHolder, position: Int) {
-        holder.showHero(heroList[position])
+        holder.showHero(heroes[position])
         holder.showPosition(position)
-        holder.addListener(heroList[position])
+        holder.addListener(heroes[position])
     }
 
-    override fun getItemCount(): Int = heroList.size
+    override fun getItemCount(): Int = heroes.size
 
     inner class HeroViewHolder(binding: FragmentHeroesItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -64,8 +64,8 @@ class HeroesRecyclerViewAdapter() :
         }
     }
 
-    fun updateList(heroList: List<Hero>) {
-        this@HeroesRecyclerViewAdapter.heroList = heroList
+    fun updateList(heroes: List<Hero>) {
+        this@HeroesRecyclerViewAdapter.heroes = heroes
         // Needed if data has changed
         notifyDataSetChanged()
     }
