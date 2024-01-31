@@ -21,8 +21,7 @@ class SharedViewModel : ViewModel() {
         this.token = token
     }
 
-    private val _listState =
-        MutableStateFlow<ListState>(ListState.Idle())
+    private val _listState = MutableStateFlow<ListState>(ListState.Idle())
     val listState: StateFlow<ListState> = _listState
 
     private val heroes = mutableListOf<Hero>()
@@ -36,6 +35,8 @@ class SharedViewModel : ViewModel() {
     }
 
     fun getHeroes() {
+        if (heroes.isNotEmpty()) return
+
         viewModelScope.launch(Dispatchers.IO) {
             _listState.value = ListState.Loading()
             val client = OkHttpClient()
@@ -64,5 +65,9 @@ class SharedViewModel : ViewModel() {
             else
                 ListState.Error(response.message)
         }
+    }
+
+    fun heroClicked(hero: Hero) {
+        _listState.value = ListState.HeroSelected(hero)
     }
 }
