@@ -79,7 +79,8 @@ class SharedViewModel : ViewModel() {
     }
 
     fun heroClicked(hero: Hero) {
-        _listState.value = ListState.HeroSelected(hero)
+        if(hero.health > 0)
+            _listState.value = ListState.HeroSelected(hero)
     }
 
     fun hitHero(hero: Hero) {
