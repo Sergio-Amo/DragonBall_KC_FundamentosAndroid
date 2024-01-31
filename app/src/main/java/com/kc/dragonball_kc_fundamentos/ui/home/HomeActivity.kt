@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.kc.dragonball_kc_fundamentos.databinding.ActivityHomeBinding
+import com.kc.dragonball_kc_fundamentos.model.Hero
 import com.kc.dragonball_kc_fundamentos.ui.home.list.HeroesFragment
 import com.kc.dragonball_kc_fundamentos.utils.INFO_HOME_ACTIVITY
 
@@ -38,6 +39,13 @@ class HomeActivity : AppCompatActivity(), HomeInterface {
         supportFragmentManager.beginTransaction()
             .replace(binding.fragmentContainer.id, HeroesFragment(token, this))
             //.addToBackStack(null) // Put fragment into back stack
+            .commit()
+    }
+
+    fun showHeroDetails(hero: Hero) {
+        supportFragmentManager.beginTransaction()
+            .replace(binding.fragmentContainer.id, HeroDetailsFragment(hero, this))
+            .addToBackStack(null) // Put fragment into back stack
             .commit()
     }
 

@@ -11,20 +11,21 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kc.dragonball_kc_fundamentos.databinding.FragmentHeroesListBinding
 import com.kc.dragonball_kc_fundamentos.model.Hero
+import com.kc.dragonball_kc_fundamentos.ui.home.HomeActivity
 import com.kc.dragonball_kc_fundamentos.ui.home.HomeInterface
 import com.kc.dragonball_kc_fundamentos.ui.home.SharedViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-/**
- * A fragment representing a list of Items.
- */
+interface FragmentInterface {
+    fun heroClicked(hero: Hero)
+}
 class HeroesFragment(private val token: String, private val homeInterface: HomeInterface) :
-    Fragment() {
+    Fragment(), FragmentInterface {
 
     private lateinit var binding: FragmentHeroesListBinding
     private val sharedViewModel: SharedViewModel by activityViewModels()
-    private val heroAdapter = HeroesRecyclerViewAdapter()
+    private val heroAdapter = HeroesRecyclerViewAdapter(this)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,7 +66,7 @@ class HeroesFragment(private val token: String, private val homeInterface: HomeI
                     is SharedViewModel.ListState.Error -> showError(state.errorMessage)
                     is SharedViewModel.ListState.Loading -> showLoading(true)
                     is SharedViewModel.ListState.HeroesLoaded -> populateList(state.heroes)
-                    is SharedViewModel.ListState.HeroSelected -> heroSelected(state.hero)
+                    is SharedViewModel.ListState.HeroSelected -> showHeroDetails(state.hero)
                 }
             }
         }
@@ -89,7 +90,11 @@ class HeroesFragment(private val token: String, private val homeInterface: HomeI
         showLoading(false)
     }
 
-    private fun heroSelected(hero: Hero) {
-        // TODO: Navigate to hero description
+    private fun showHeroDetails(hero: Hero) {
+        (activity as? HomeActivity)?.showHeroDetails(hero)
+    }
+
+    override fun heroClicked(hero: Hero) {
+        sharedViewModel.heroClicked(hero)
     }
 }

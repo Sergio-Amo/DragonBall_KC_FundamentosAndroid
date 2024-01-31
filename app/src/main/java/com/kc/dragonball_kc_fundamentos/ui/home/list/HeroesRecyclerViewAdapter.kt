@@ -16,7 +16,7 @@ import com.kc.dragonball_kc_fundamentos.R
 import com.kc.dragonball_kc_fundamentos.databinding.FragmentHeroesItemBinding
 import com.kc.dragonball_kc_fundamentos.model.Hero
 
-class HeroesRecyclerViewAdapter() :
+class HeroesRecyclerViewAdapter(val callback: FragmentInterface) :
     RecyclerView.Adapter<HeroesRecyclerViewAdapter.HeroViewHolder>() {
 
     private var heroes: List<Hero> = emptyList()
@@ -31,7 +31,6 @@ class HeroesRecyclerViewAdapter() :
 
     override fun onBindViewHolder(holder: HeroViewHolder, position: Int) {
         holder.showHero(heroes[position])
-        //holder.showPosition(position)
         holder.addListener(heroes[position])
     }
 
@@ -66,7 +65,7 @@ class HeroesRecyclerViewAdapter() :
 
         fun addListener(hero: Hero) {
             root.setOnClickListener {
-                // TODO: Clicked!
+                callback.heroClicked(hero)
             }
         }
 
@@ -77,7 +76,6 @@ class HeroesRecyclerViewAdapter() :
 
     fun updateList(heroes: List<Hero>) {
         this@HeroesRecyclerViewAdapter.heroes = heroes
-        // Needed if data has changed
         notifyDataSetChanged()
     }
 }
