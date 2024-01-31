@@ -1,6 +1,5 @@
 package com.kc.dragonball_kc_fundamentos.ui.home
 
-import android.net.NetworkInfo.DetailedState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
@@ -34,6 +33,7 @@ class SharedViewModel : ViewModel() {
         class HeroesLoaded(val heroes: List<Hero>) : ListState()
         class HeroSelected(val hero: Hero) : ListState()
         class HeroUpdated(val hero: Hero) : ListState()
+        class HeroIsDead(val hero: Hero) : ListState()
     }
 
     private val _detailsState = MutableStateFlow<DetailsState>(DetailsState.Idle())
@@ -43,7 +43,8 @@ class SharedViewModel : ViewModel() {
         class Idle : DetailsState()
         class Error(val errorMessage: String) : DetailsState()
         class Loading : DetailsState()
-        class HeroUpdated(val hero: Hero) : DetailsState()
+        class HeroUpdated : DetailsState()
+        class HeroIsDead : DetailsState()
     }
 
     fun getHeroes() {
@@ -92,7 +93,12 @@ class SharedViewModel : ViewModel() {
     }
 
     private fun updateHero(hero: Hero) {
-        _detailsState.value = DetailsState.HeroUpdated(hero)
-        _listState.value = ListState.HeroUpdated(hero)
+        if (hero.health == 0) {
+            _detailsState.value = DetailsState.HeroIsDead()
+            _listState.value = ListState.HeroIsDead(hero)
+        } else {
+            _detailsState.value = DetailsState.HeroUpdated()
+            _listState.value = ListState.HeroUpdated(hero)
+        }
     }
 }

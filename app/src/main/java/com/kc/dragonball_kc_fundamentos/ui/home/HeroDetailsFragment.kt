@@ -54,7 +54,8 @@ class HeroDetailsFragment(private val hero: Hero, private val homeInterface: Hom
                     is SharedViewModel.DetailsState.Idle -> idle()
                     is SharedViewModel.DetailsState.Error -> showError(state.errorMessage)
                     is SharedViewModel.DetailsState.Loading -> showLoading(true)
-                    is SharedViewModel.DetailsState.HeroUpdated -> updateHero(state.hero)
+                    is SharedViewModel.DetailsState.HeroUpdated -> updateHero()
+                    is SharedViewModel.DetailsState.HeroIsDead -> parentFragmentManager.popBackStack()
                 }
             }
         }
@@ -73,7 +74,7 @@ class HeroDetailsFragment(private val hero: Hero, private val homeInterface: Hom
         homeInterface.showLoading(show)
     }
 
-    private fun updateHero(hero: Hero) {
+    private fun updateHero() {
         showHero()
     }
 

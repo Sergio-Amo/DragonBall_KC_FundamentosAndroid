@@ -68,6 +68,7 @@ class HeroesFragment(private val token: String, private val homeInterface: HomeI
                     is SharedViewModel.ListState.HeroesLoaded -> populateList(state.heroes)
                     is SharedViewModel.ListState.HeroSelected -> showHeroDetails(state.hero)
                     is SharedViewModel.ListState.HeroUpdated -> updateHero(state.hero)
+                    is SharedViewModel.ListState.HeroIsDead -> updateHero(state.hero)
                 }
             }
         }

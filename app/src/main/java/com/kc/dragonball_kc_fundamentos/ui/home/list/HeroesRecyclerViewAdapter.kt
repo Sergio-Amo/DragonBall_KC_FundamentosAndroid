@@ -2,14 +2,14 @@ package com.kc.dragonball_kc_fundamentos.ui.home.list
 
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.kc.dragonball_kc_fundamentos.R
@@ -61,6 +61,10 @@ class HeroesRecyclerViewAdapter(val callback: FragmentInterface) :
                 .centerCrop()
                 .placeholder(R.drawable.ic_launcher_foreground)
                 .into(heroImage)
+            // Dead status
+            if (hero.health == 0)
+                heroImage.colorFilter =
+                    ColorMatrixColorFilter(ColorMatrix().apply { setSaturation(0f) })
         }
 
         fun addListener(hero: Hero) {
@@ -79,7 +83,7 @@ class HeroesRecyclerViewAdapter(val callback: FragmentInterface) :
         notifyDataSetChanged()
     }
 
-    fun updateHero (hero: Hero) {
+    fun updateHero(hero: Hero) {
         notifyItemChanged(this.heroes.indexOf(hero))
     }
 }
