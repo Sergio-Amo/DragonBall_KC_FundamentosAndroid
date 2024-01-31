@@ -37,14 +37,13 @@ class HomeActivity : AppCompatActivity(), HomeInterface {
 
     private fun showHeroList(token: String) {
         supportFragmentManager.beginTransaction()
-            .replace(binding.fragmentContainer.id, HeroesFragment(token, this))
-            //.addToBackStack(null) // Put fragment into back stack
+            .add(binding.fragmentContainer.id, HeroesFragment(token, this))
             .commit()
     }
 
     fun showHeroDetails(hero: Hero) {
         supportFragmentManager.beginTransaction()
-            .replace(binding.fragmentContainer.id, HeroDetailsFragment(hero, this))
+            .replace(binding.fragmentDetailsContainer.id, HeroDetailsFragment(hero, this))
             .addToBackStack(null) // Put fragment into back stack
             .commit()
     }

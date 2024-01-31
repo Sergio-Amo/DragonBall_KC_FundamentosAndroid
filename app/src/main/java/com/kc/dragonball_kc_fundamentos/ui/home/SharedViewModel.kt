@@ -35,8 +35,6 @@ class SharedViewModel : ViewModel() {
     }
 
     fun getHeroes() {
-        if (heroes.isNotEmpty()) return
-
         viewModelScope.launch(Dispatchers.IO) {
             _listState.value = ListState.Loading()
             val client = OkHttpClient()
