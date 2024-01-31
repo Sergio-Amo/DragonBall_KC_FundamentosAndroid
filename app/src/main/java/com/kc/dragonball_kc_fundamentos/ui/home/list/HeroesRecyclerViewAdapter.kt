@@ -75,8 +75,12 @@ class HeroesRecyclerViewAdapter(val callback: FragmentInterface) :
     }
 
     fun updateList(heroes: List<Hero>) {
-        this@HeroesRecyclerViewAdapter.heroes = heroes
+        this.heroes = heroes
         notifyDataSetChanged()
+    }
+
+    fun updateHero (hero: Hero) {
+        notifyItemChanged(this.heroes.indexOf(hero))
     }
 }
 
