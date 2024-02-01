@@ -1,9 +1,11 @@
 package com.kc.dragonball_kc_fundamentos
 
+import com.kc.dragonball_kc_fundamentos.model.Hero
 import com.kc.dragonball_kc_fundamentos.ui.home.SharedViewModel
 import com.kc.dragonball_kc_fundamentos.ui.login.LoginViewModel
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import kotlin.math.min
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -13,7 +15,7 @@ import org.junit.Test
 class ExampleUnitTest {
 
     private val loginViewModel = LoginViewModel()
-    private val sharedViewModel = SharedViewModel()
+    private val hero: Hero = Hero("name", "id", "photo", 80)
 
     @Test
     fun `test mail validation`() {
@@ -35,5 +37,31 @@ class ExampleUnitTest {
     }
 
     @Test
-    fun `test2 mail validation`() {}
+    fun `test hero hit`() {
+        // Check the damage stays between 10 and 60
+        repeat(50) {
+            hero.health = 100
+            hero.getHit()
+            assert(hero.health in 40..90)
+        }
+        // Check health doesn't go below 0
+        repeat(50) {
+            hero.health = 10
+            hero.getHit()
+            assertEquals(0, hero.health)
+        }
+    }
+
+    @Test
+    fun `test hero heal`() {
+        // Check heal is 20 and don't go beyond maxhealth
+        hero.health = 3
+        while (hero.health < hero.maxHealth) {
+            var healthBefore = hero.health
+            hero.getHeal()
+            assertEquals(hero.health, min(hero.maxHealth, healthBefore + 20))
+            assert(hero.health <= hero.maxHealth)
+        }
+        assert(hero.health <= 100)
+    }
 }
