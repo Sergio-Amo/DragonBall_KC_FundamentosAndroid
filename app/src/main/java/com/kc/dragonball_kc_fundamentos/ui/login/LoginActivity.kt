@@ -1,6 +1,5 @@
 package com.kc.dragonball_kc_fundamentos.ui.login
 
-import android.content.Context
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -11,8 +10,6 @@ import androidx.lifecycle.lifecycleScope
 import com.kc.dragonball_kc_fundamentos.data.repository.Login
 import com.kc.dragonball_kc_fundamentos.databinding.ActivityLoginBinding
 import com.kc.dragonball_kc_fundamentos.ui.home.HomeActivity
-import com.kc.dragonball_kc_fundamentos.utils.LOGIN_CHECKBOX_CHECKED
-import com.kc.dragonball_kc_fundamentos.utils.LOGIN_EMAIL_VALUE
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

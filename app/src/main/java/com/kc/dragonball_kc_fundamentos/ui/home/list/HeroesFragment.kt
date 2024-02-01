@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.kc.dragonball_kc_fundamentos.data.repository.Heroes
 import com.kc.dragonball_kc_fundamentos.databinding.FragmentHeroesListBinding
 import com.kc.dragonball_kc_fundamentos.model.Hero
 import com.kc.dragonball_kc_fundamentos.ui.home.HomeActivity
