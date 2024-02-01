@@ -29,12 +29,13 @@ class LoginViewModel : ViewModel() {
         class SuccessLogin(val token: String) : LoginState()
     }
 
-    fun validateEmail(str: String) {
+    fun validateEmail(str: String): Boolean {
         // Validates email in (valid chars) (@) (char/s) (dot) (chars)
         "^[A-Za-z0-9+_.-]+@(.+)\\..+\$".toRegex().also {
             isValidEmail = it.matches(str)
         }
         setLoginButtonState()
+        return isValidEmail
     }
 
     // I can't validate the password too much are some users has very short passwords
@@ -49,7 +50,7 @@ class LoginViewModel : ViewModel() {
         _uiState.value = LoginState.LoginEnable(areFieldsValid())
     }
 
-    fun loginClicked(user: String, password: String) {
+    fun doLogin(user: String, password: String) {
         if (!areFieldsValid()) {
             _uiState.value = LoginState.Error("Failed to validate mail or password")
             return

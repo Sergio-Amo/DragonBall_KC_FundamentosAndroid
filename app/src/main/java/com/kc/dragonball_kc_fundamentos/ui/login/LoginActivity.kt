@@ -55,7 +55,7 @@ class LoginActivity : AppCompatActivity() {
         binding.loginButton.setOnClickListener {
             val email = binding.editTextTextEmailAddress.text.toString()
             val password = binding.editTextTextPassword.text.toString()
-            viewModel.loginClicked(email, password)
+            viewModel.doLogin(email, password)
         }
         //EditText text changed listeners
         binding.editTextTextEmailAddress.doAfterTextChanged { viewModel.validateEmail(it.toString()) }
