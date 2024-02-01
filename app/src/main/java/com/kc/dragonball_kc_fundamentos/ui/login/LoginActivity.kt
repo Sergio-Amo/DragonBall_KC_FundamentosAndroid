@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
+import com.kc.dragonball_kc_fundamentos.data.repository.Login
 import com.kc.dragonball_kc_fundamentos.databinding.ActivityLoginBinding
 import com.kc.dragonball_kc_fundamentos.ui.home.HomeActivity
 import com.kc.dragonball_kc_fundamentos.utils.LOGIN_CHECKBOX_CHECKED
@@ -39,14 +40,13 @@ class LoginActivity : AppCompatActivity() {
             view.imageMatrix = matrix
         }
         // Set checkbox state
-        val rememberCbChecked =
-            getPreferences(Context.MODE_PRIVATE).getBoolean(LOGIN_CHECKBOX_CHECKED, false)
+        val rememberCbChecked = Login.getCheckBoxValue(this)
         binding.rememberCheckBox.isChecked = rememberCbChecked
         // Set email value
         /** I decided against saving passwords or tokens cause the
          * exercise asked to use shared preferences that are not secure enough for it **/
         if (rememberCbChecked) binding.editTextTextEmailAddress.setText(
-            getPreferences(Context.MODE_PRIVATE).getString(LOGIN_EMAIL_VALUE, "")
+            Login.getEmailValue(this)
         )
         // Set login button state
         viewModel.validateEmail(binding.editTextTextEmailAddress.text.toString())
@@ -65,18 +65,8 @@ class LoginActivity : AppCompatActivity() {
         binding.editTextTextPassword.doAfterTextChanged { viewModel.validatePassword(it.toString()) }
         // Remember user checkbox
         binding.rememberCheckBox.setOnCheckedChangeListener { _, isChecked ->
-            getPreferences(Context.MODE_PRIVATE).edit().apply {
-                if (!isChecked) putString(LOGIN_EMAIL_VALUE, "")
-                putBoolean(LOGIN_CHECKBOX_CHECKED, isChecked)
-                apply()
-            }
-        }
-    }
-
-    private fun saveEmail(emailValue: String) {
-        getPreferences(Context.MODE_PRIVATE).edit().apply {
-            putString(LOGIN_EMAIL_VALUE, emailValue)
-            apply()
+            if (!isChecked) Login.removeEmail(this)
+            Login.saveCheckBoxState(this, isChecked)
         }
     }
 
@@ -113,7 +103,8 @@ class LoginActivity : AppCompatActivity() {
 
     private fun successLogin(token: String) {
         // Save mail if remember checked
-        if (binding.rememberCheckBox.isChecked) saveEmail(binding.editTextTextEmailAddress.text.toString())
+        if (binding.rememberCheckBox.isChecked)
+            Login.saveEmailValue(this, binding.editTextTextEmailAddress.text.toString())
         showLoading(false)
         navigateToHome(token)
         //Toast.makeText(this@LoginActivity, "Login Success", Toast.LENGTH_SHORT).show()
