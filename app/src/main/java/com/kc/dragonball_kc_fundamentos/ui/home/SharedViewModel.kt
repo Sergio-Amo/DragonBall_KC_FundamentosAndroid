@@ -106,4 +106,11 @@ class SharedViewModel : ViewModel() {
     fun resetDetailsState() {
         _detailsState.value = DetailsState.Idle()
     }
+
+    fun healAllHeroes() {
+        heroes.map {
+            it.health = it.maxHealth
+        }
+        _listState.value = ListState.HeroesLoaded(heroes)
+    }
 }

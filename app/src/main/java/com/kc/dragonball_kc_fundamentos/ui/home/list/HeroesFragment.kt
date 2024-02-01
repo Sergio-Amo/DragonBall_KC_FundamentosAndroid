@@ -55,7 +55,9 @@ class HeroesFragment(private val token: String, private val homeInterface: HomeI
     }
 
     private fun setListeners() {
-        // TODO
+        binding.healAll.setOnClickListener {
+            sharedViewModel.healAllHeroes()
+        }
     }
 
     private fun setObservers() {

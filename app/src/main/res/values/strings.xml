@@ -7,4 +7,5 @@
     <string name="hero_image">Hero image</string>
     <string name="hit">Hit</string>
     <string name="heal">Heal</string>
+    <string name="heal_all">Heal All</string>
 </resources>
