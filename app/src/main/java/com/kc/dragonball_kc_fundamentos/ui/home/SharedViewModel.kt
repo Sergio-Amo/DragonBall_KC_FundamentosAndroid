@@ -63,6 +63,7 @@ class SharedViewModel : ViewModel() {
         }
     }
 
+    // TODO: move to remote repository?
     private fun getHeroesRemote() {
         val client = OkHttpClient()
         val url = "${BASE_URL}${GET_HEROES}"

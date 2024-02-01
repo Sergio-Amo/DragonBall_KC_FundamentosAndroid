@@ -50,6 +50,7 @@ class LoginViewModel : ViewModel() {
         _uiState.value = LoginState.LoginEnable(areFieldsValid())
     }
 
+    // TODO: move to remote repository?
     fun doLogin(user: String, password: String) {
         if (!areFieldsValid()) {
             _uiState.value = LoginState.Error("Failed to validate mail or password")
