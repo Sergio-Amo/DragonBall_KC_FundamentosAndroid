@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
-import com.kc.dragonball_kc_fundamentos.data.repository.Login
+import com.kc.dragonball_kc_fundamentos.data.repository.local.LoginRepository
 import com.kc.dragonball_kc_fundamentos.databinding.ActivityLoginBinding
 import com.kc.dragonball_kc_fundamentos.ui.home.HomeActivity
 import kotlinx.coroutines.Dispatchers
@@ -37,13 +37,13 @@ class LoginActivity : AppCompatActivity() {
             view.imageMatrix = matrix
         }
         // Set checkbox state
-        val rememberCbChecked = Login.getCheckBoxValue(this)
+        val rememberCbChecked = LoginRepository.getCheckBoxValue(this)
         binding.rememberCheckBox.isChecked = rememberCbChecked
         // Set email value
         /** I decided against saving passwords or tokens cause the
          * exercise asked to use shared preferences that are not secure enough for it **/
         if (rememberCbChecked) binding.editTextTextEmailAddress.setText(
-            Login.getEmailValue(this)
+            LoginRepository.getEmailValue(this)
         )
         // Set login button state
         viewModel.validateEmail(binding.editTextTextEmailAddress.text.toString())
@@ -62,8 +62,8 @@ class LoginActivity : AppCompatActivity() {
         binding.editTextTextPassword.doAfterTextChanged { viewModel.validatePassword(it.toString()) }
         // Remember user checkbox
         binding.rememberCheckBox.setOnCheckedChangeListener { _, isChecked ->
-            if (!isChecked) Login.removeEmail(this)
-            Login.saveCheckBoxState(this, isChecked)
+            if (!isChecked) LoginRepository.removeEmail(this)
+            LoginRepository.saveCheckBoxState(this, isChecked)
         }
     }
 
@@ -101,7 +101,7 @@ class LoginActivity : AppCompatActivity() {
     private fun successLogin(token: String) {
         // Save mail if remember checked
         if (binding.rememberCheckBox.isChecked)
-            Login.saveEmailValue(this, binding.editTextTextEmailAddress.text.toString())
+            LoginRepository.saveEmailValue(this, binding.editTextTextEmailAddress.text.toString())
         showLoading(false)
         navigateToHome(token)
         //Toast.makeText(this@LoginActivity, "Login Success", Toast.LENGTH_SHORT).show()

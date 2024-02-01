@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
-import com.kc.dragonball_kc_fundamentos.data.repository.Heroes
+import com.kc.dragonball_kc_fundamentos.data.repository.local.HeroesRepository
 import com.kc.dragonball_kc_fundamentos.model.Hero
 import com.kc.dragonball_kc_fundamentos.model.HeroDto
 import com.kc.dragonball_kc_fundamentos.utils.BASE_URL
@@ -53,7 +53,7 @@ class SharedViewModel : ViewModel() {
     fun getHeroes(context: Context) {
         viewModelScope.launch(Dispatchers.IO) {
             _listState.value = ListState.Loading()
-            val heroes = Heroes.getHeroes(context)
+            val heroes = HeroesRepository.getHeroes(context)
             // Not null or empty
             if (!heroes.isNullOrEmpty()) {
                 this@SharedViewModel.heroes.addAll(heroes)

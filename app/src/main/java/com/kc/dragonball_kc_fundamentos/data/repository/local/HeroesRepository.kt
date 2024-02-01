@@ -1,11 +1,11 @@
-package com.kc.dragonball_kc_fundamentos.data.repository
+package com.kc.dragonball_kc_fundamentos.data.repository.local
 
 import android.content.Context
 import com.google.gson.Gson
 import com.kc.dragonball_kc_fundamentos.model.Hero
 import com.kc.dragonball_kc_fundamentos.utils.HEROES_VALUE
 
-class Heroes {
+class HeroesRepository {
     companion object {
 
         private val gson = Gson()

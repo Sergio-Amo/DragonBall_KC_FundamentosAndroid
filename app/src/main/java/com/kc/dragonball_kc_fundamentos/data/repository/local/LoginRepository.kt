@@ -1,10 +1,10 @@
-package com.kc.dragonball_kc_fundamentos.data.repository
+package com.kc.dragonball_kc_fundamentos.data.repository.local
 
 import android.content.Context
 import com.kc.dragonball_kc_fundamentos.utils.LOGIN_CHECKBOX_CHECKED
 import com.kc.dragonball_kc_fundamentos.utils.LOGIN_EMAIL_VALUE
 
-class Login {
+class LoginRepository {
     companion object {
         fun getEmailValue(context: Context): String =
             context.getSharedPreferences(LOGIN_EMAIL_VALUE, Context.MODE_PRIVATE)
