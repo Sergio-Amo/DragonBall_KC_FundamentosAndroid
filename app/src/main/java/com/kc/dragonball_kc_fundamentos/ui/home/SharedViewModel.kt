@@ -1,11 +1,14 @@
 package com.kc.dragonball_kc_fundamentos.ui.home
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
+import com.kc.dragonball_kc_fundamentos.data.repository.Heroes
 import com.kc.dragonball_kc_fundamentos.model.Hero
 import com.kc.dragonball_kc_fundamentos.model.HeroDto
 import com.kc.dragonball_kc_fundamentos.utils.BASE_URL
+import com.kc.dragonball_kc_fundamentos.utils.GET_HEROES
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -47,39 +50,49 @@ class SharedViewModel : ViewModel() {
         class HeroIsDead : DetailsState()
     }
 
-    fun getHeroes() {
+    fun getHeroes(context: Context) {
         viewModelScope.launch(Dispatchers.IO) {
             _listState.value = ListState.Loading()
-            val client = OkHttpClient()
-            val url = "${BASE_URL}/heros/all"
-            val formBody = FormBody.Builder() // response as POST
-                .add("name", "")
-                .build()
-            val request = Request.Builder()
-                .url(url)
-                .addHeader("Authorization", "Bearer $token")
-                .post(formBody)
-                .build()
-            val call = client.newCall(request)
-            val response = call.execute()
-            _listState.value = if (response.isSuccessful)
-                response.body?.let {
-                    val heroesDtoArray: Array<HeroDto> =
-                        Gson().fromJson(it.string(), Array<HeroDto>::class.java)
-                    val heroArray = heroesDtoArray.map { hero ->
-                        // Create Hero from HeroDto (health and maxHealth will be set to its default)
-                        Hero(hero.name, hero.id, hero.photo)
-                    }
-                    heroes.addAll(heroArray.toList())
-                    ListState.HeroesLoaded(heroes)
-                } ?: ListState.Error("Empty Token")
-            else
-                ListState.Error(response.message)
+            val heroes = Heroes.getHeroes(context)
+            // Not null or empty
+            if (!heroes.isNullOrEmpty()) {
+                this@SharedViewModel.heroes.addAll(heroes)
+                _listState.value = ListState.HeroesLoaded(this@SharedViewModel.heroes)
+            } else
+                getHeroesRemote()
         }
     }
 
+    private fun getHeroesRemote() {
+        val client = OkHttpClient()
+        val url = "${BASE_URL}${GET_HEROES}"
+        val formBody = FormBody.Builder() // response as POST
+            .add("name", "")
+            .build()
+        val request = Request.Builder()
+            .url(url)
+            .addHeader("Authorization", "Bearer $token")
+            .post(formBody)
+            .build()
+        val call = client.newCall(request)
+        val response = call.execute()
+        _listState.value = if (response.isSuccessful)
+            response.body?.let {
+                val heroesDtoArray: Array<HeroDto> =
+                    Gson().fromJson(it.string(), Array<HeroDto>::class.java)
+                val heroArray = heroesDtoArray.map { hero ->
+                    // Create Hero from HeroDto (health and maxHealth will be set to its default)
+                    Hero(hero.name, hero.id, hero.photo)
+                }
+                heroes.addAll(heroArray.toList())
+                ListState.HeroesLoaded(heroes)
+            } ?: ListState.Error("Empty Token")
+        else
+            ListState.Error(response.message)
+    }
+
     fun heroClicked(hero: Hero) {
-        if(hero.health > 0)
+        if (hero.health > 0)
             _listState.value = ListState.HeroSelected(hero)
     }
 

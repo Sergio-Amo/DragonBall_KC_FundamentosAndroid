@@ -1,5 +1,6 @@
 package com.kc.dragonball_kc_fundamentos.ui.home.list
 
+import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.ColorMatrix
@@ -13,6 +14,7 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.kc.dragonball_kc_fundamentos.R
+import com.kc.dragonball_kc_fundamentos.data.repository.Heroes
 import com.kc.dragonball_kc_fundamentos.databinding.FragmentHeroesItemBinding
 import com.kc.dragonball_kc_fundamentos.model.Hero
 
@@ -85,6 +87,10 @@ class HeroesRecyclerViewAdapter(val callback: FragmentInterface) :
 
     fun updateHero(hero: Hero) {
         notifyItemChanged(this.heroes.indexOf(hero))
+    }
+
+    fun saveHeroes(context: Context) {
+        Heroes.saveHeroes(context, heroes)
     }
 }
 

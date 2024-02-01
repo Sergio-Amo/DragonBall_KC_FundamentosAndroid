@@ -3,6 +3,7 @@ package com.kc.dragonball_kc_fundamentos.ui.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kc.dragonball_kc_fundamentos.utils.BASE_URL
+import com.kc.dragonball_kc_fundamentos.utils.GET_LOGIN
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -56,7 +57,7 @@ class LoginViewModel : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             _uiState.value = LoginState.Loading()
             val client = OkHttpClient()
-            val url = "${BASE_URL}/auth/login"
+            val url = "${BASE_URL}${GET_LOGIN}"
             val credentials = Credentials.basic(user, password)
             val formBody = FormBody.Builder() // response as POST
                 .build()
