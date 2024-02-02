@@ -122,7 +122,7 @@ class SharedViewModel : ViewModel() {
     }
 
     fun healAllHeroes() {
-        heroes.map {
+        heroes.forEach {
             it.health = it.maxHealth
         }
         _listState.value = ListState.HeroesLoaded(heroes)
